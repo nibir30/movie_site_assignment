@@ -1,10 +1,7 @@
 package com.assignment.movie.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +20,8 @@ public class UserModel {
     List<MovieModel> favoriteMovies;
     @Id
     private Long id;
+
+    @Column(unique = true)
     private String email;
     private String firstName;
     private String lastName;

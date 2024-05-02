@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
             if (addUserReqData.getId() == null) {
                 addUserReqData.setId(IdGenerator.generateId());
             }
+            newUser.setFullName(addUserReqData.getFirstName() + " " + addUserReqData.getLastName());
             BeanUtils.copyProperties(addUserReqData, newUser);
             newUser.setInsertTime(LocalDateTime.now());
             UserModel savedUser = userRepository.save(newUser);
