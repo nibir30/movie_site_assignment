@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -14,5 +12,5 @@ import java.time.LocalDateTime;
 public class AddCastReqData {
     private String fullName;
     private String imagePath;
-    private LocalDateTime dob;
+    private Integer age;
 }

@@ -17,17 +17,20 @@ import java.util.List;
 @Entity(name = "movie")
 public class MovieModel {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long movieId;
     String title;
 
-    @OneToMany(targetEntity = LookupCategoryModel.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
+    @ManyToMany(targetEntity = LookupCategoryModel.class, cascade = {CascadeType.MERGE})
     List<LookupCategoryModel> categories;
 
-    @OneToMany(targetEntity = CastModel.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
+    @ManyToMany(targetEntity = CastModel.class, cascade = {CascadeType.MERGE})
     List<CastModel> casts;
 
     LocalDateTime releaseDate;
-    Long budget;
+    Integer budget;
+    Integer year;
+    String imagePath;
 
     @JsonIgnore
     LocalDateTime insertTime;

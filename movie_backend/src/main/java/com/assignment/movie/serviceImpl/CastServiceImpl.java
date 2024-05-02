@@ -24,8 +24,8 @@ public class CastServiceImpl implements CastService {
             return ResponseUtils.validationError("Cast name is mandatory!");
         } else if (checkStringNullOrEmpty(addCastReqData.getImagePath())) {
             return ResponseUtils.validationError("Cast image is mandatory!");
-        } else if (addCastReqData.getDob() == null) {
-            return ResponseUtils.validationError("Cast Date of Birth is mandatory!");
+        } else if (addCastReqData.getAge() == null) {
+            return ResponseUtils.validationError("Cast Age is mandatory!");
         }
         try {
             CastModel newCast = new CastModel();
@@ -33,7 +33,7 @@ public class CastServiceImpl implements CastService {
             BeanUtils.copyProperties(addCastReqData, newCast);
             newCast.setInsertTime(LocalDateTime.now());
             CastModel savedCast = castRepository.save(newCast);
-            return ResponseUtils.dataSuccess("Successfully added a cast", newCast);
+            return ResponseUtils.dataSuccess("Successfully added a cast", savedCast);
         } catch (Exception ex) {
             return ResponseUtils.exceptionError("Could not save cast", ex.getMessage());
         }

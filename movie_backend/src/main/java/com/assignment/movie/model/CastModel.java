@@ -2,6 +2,8 @@ package com.assignment.movie.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,10 +19,11 @@ import java.time.LocalDateTime;
 @Entity(name = "cast")
 public class CastModel {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long castId;
     private String fullName;
     private String imagePath;
-    private LocalDateTime dob;
+    private Integer age;
     @JsonIgnore
     private LocalDateTime insertTime;
     @JsonIgnore
