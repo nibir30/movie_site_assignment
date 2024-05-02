@@ -1,13 +1,17 @@
 package com.assignment.movie.serviceImpl;
 
 import com.assignment.movie.data.ReqData.AddFavoriteMovieReqData;
+import com.assignment.movie.data.ResData.CategoryWIthMoviesResData;
 import com.assignment.movie.data.ResData.core.ResponseBaseData;
+import com.assignment.movie.model.LookupCategoryModel;
 import com.assignment.movie.model.MovieModel;
 import com.assignment.movie.model.UserModel;
+import com.assignment.movie.repository.CategoryRepository;
 import com.assignment.movie.repository.MovieRepository;
 import com.assignment.movie.repository.UserRepository;
 import com.assignment.movie.service.MovieService;
 import com.assignment.movie.util.ResponseUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +26,23 @@ public class MovieServiceImpl implements MovieService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
+
+    @Override
+    public ResponseBaseData<?> getCategoriesWithMovies() {
+        List<LookupCategoryModel> categoryModelList = categoryRepository.findAll();
+        List<CategoryWIthMoviesResData> categoryWIthMoviesResDataList = new ArrayList<>();
+        for (LookupCategoryModel categoryModel : categoryModelList) {
+            CategoryWIthMoviesResData categoryWIthMoviesResData = new CategoryWIthMoviesResData();
+            List<MovieModel> movieModels = movieRepository.findAllByCategories_categoryId(categoryModel.getCategoryId());
+            BeanUtils.copyProperties(categoryModel, categoryWIthMoviesResData);
+            categoryWIthMoviesResData.setMovieModelList(movieModels);
+            categoryWIthMoviesResDataList.add(categoryWIthMoviesResData);
+        }
+        return ResponseUtils.dataSuccess("Here are the movies", categoryWIthMoviesResDataList);
+    }
 
     @Override
     public ResponseBaseData<?> addMovie(MovieModel movieModel) {

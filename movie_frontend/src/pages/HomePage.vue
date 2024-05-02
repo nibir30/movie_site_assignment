@@ -1,5 +1,23 @@
 <script setup>
+import movieService from '@/services/movie.service'
+import { onBeforeMount, ref } from 'vue'
 
+const movieList = ref([])
+onBeforeMount(async () => {
+  await fetchMovies()
+})
+
+async function fetchMovies() {
+  try {
+    const response = await movieService.getMoviesByCategory()
+    if (response.success) {
+      movieList.value = response.data
+      console.log(response.data)
+    }
+  } catch (e) {
+    console.log(e)
+  }
+}
 </script>
 
 <template>
